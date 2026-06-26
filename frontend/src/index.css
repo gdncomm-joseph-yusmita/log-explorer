@@ -1,0 +1,17 @@
+@import "tailwindcss";
+@import "./loading-spinner.css";
+
+* {
+  font-family: "Stack Sans Text";
+}
+
+.transition-easing {
+  transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1) !important;
+}
+
+@theme inline {
+  --color-border: hsla(0, 0%, 92%, 1);
+  --color-background: hsla(0, 0%, 98%, 1);
+  --color-secondary: hsla(0, 0%, 60%, 1);
+  --color-accent: #0072ff;
+}
