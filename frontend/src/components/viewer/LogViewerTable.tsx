@@ -4,11 +4,11 @@ import type {
   ApplicationLog,
 } from "../../applications/types";
 import { cn } from "../../lib/utils";
-import { useLogsStore } from "../../stores/useLogsStore";
 import HighlightText from "../ui/HighlightText";
 import { Icon } from "@iconify/react";
 import LogViewerEmpty from "./LogViewerEmpty";
-import { useLogsOptionsStore } from "@/stores/useLogsOptionsStore";
+import { useLogsFilterStore } from "@/stores/useLogsFilterStore";
+import { useLogsLayoutStore } from "@/stores/useLogsLayoutStore";
 
 type Props<T extends ApplicationLog> = {
   schema: ApplicationSchema<T>[];
@@ -21,8 +21,9 @@ export default function LogViewerTable<T extends ApplicationLog>({
   logs,
   isLoading,
 }: Props<T>) {
-  const { activeLog, setActiveLog } = useLogsOptionsStore();
-  const { searchQuery, toggleLogExpansion, expandedLogs } = useLogsStore();
+  const { activeLog, setActiveLog, toggleLogExpansion, expandedLogs } =
+    useLogsLayoutStore();
+  const { searchQuery } = useLogsFilterStore();
 
   const gridTemplateColumns =
     "0.25rem " +
@@ -31,10 +32,6 @@ export default function LogViewerTable<T extends ApplicationLog>({
       .map((s) => s.columnSize || "")
       .join(" ") +
     ` 1rem`;
-
-  const filteredLogs = logs?.filter((log) =>
-    log.raw.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
 
   return (
     <div className="flex flex-col flex-1 min-h-0 overflow-auto relative">
@@ -56,9 +53,8 @@ export default function LogViewerTable<T extends ApplicationLog>({
         </div>
 
         <ul className="p-2 flex-1 min-h-0 bg-white viewer-body">
-          {!isLoading && filteredLogs && filteredLogs.length <= 0 && (
-            <LogViewerEmpty />
-          )}
+          {/* <div className=""></div> */}
+          {!isLoading && logs && logs.length <= 0 && <LogViewerEmpty />}
           {isLoading &&
             new Array(24).fill("x").map((_, i) => {
               return (
@@ -67,10 +63,10 @@ export default function LogViewerTable<T extends ApplicationLog>({
                 </div>
               );
             })}
-          {filteredLogs?.map((_, i) => {
+          {logs?.map((_, i) => {
             // HACK: Performant way to read from the end of the array to the front without allocating new memory
-            const reverseIndex = filteredLogs.length - 1 - i;
-            const log = filteredLogs[reverseIndex];
+            const reverseIndex = logs.length - 1 - i;
+            const log = logs[reverseIndex];
 
             // TODO: Change this into id based later!
             const isActive = activeLog && log.raw === activeLog.raw;

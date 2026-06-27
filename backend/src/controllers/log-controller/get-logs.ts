@@ -5,7 +5,7 @@ import { validateRequest } from "../../utils/validate-request.js";
 import { APPLICATION, HOSTS } from "../../config/config.js";
 
 const paramsSchema = z.object({
-  amount: z.coerce.number().max(100).optional().default(20),
+  amount: z.coerce.number().max(150).optional().default(20),
   app: z.enum(APPLICATION),
 });
 

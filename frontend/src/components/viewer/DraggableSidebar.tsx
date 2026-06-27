@@ -1,23 +1,18 @@
-import { useLogsStore } from "@/stores/useLogsStore";
-import {
-  useState,
-  type PropsWithChildren,
-  type ReactNode,
-  type RefObject,
-} from "react";
+import { useLogsLayoutStore } from "@/stores/useLogsLayoutStore";
+import { useState, type PropsWithChildren, type RefObject } from "react";
 
 type Props = {
   containerRef: RefObject<HTMLElement | null>;
 };
 
-const MIN_SIZE_PX = 300;
+const MIN_SIZE_PX = 500;
 const MAX_SIZE_PERCENT = 0.9;
 
 export default function DraggableSidebar({
   containerRef,
   children,
 }: PropsWithChildren<Props>) {
-  const { setSidebarSizePx } = useLogsStore();
+  const { setSidebarSizePx } = useLogsLayoutStore();
 
   const [isDragging, setIsDragging] = useState(false);
 

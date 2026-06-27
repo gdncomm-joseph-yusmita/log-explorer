@@ -1,41 +1,26 @@
+import type { ApplicationLog } from "@/applications/types";
 import { create } from "zustand";
-import type { Application } from "../applications";
 
 type LogsState = {
-  // UI Settings
-  app: Application;
-  amount: number;
-  isStreaming: boolean;
-  searchQuery: string;
   sidebarExpanded: boolean;
   expandedLogs: string[];
   sidebarSizePx: number;
+  activeLog: ApplicationLog | undefined;
 
   // Actions
-  setApp: (app: Application) => void;
-  setAmount: (amount: number) => void;
-  setIsStreaming: (state: boolean) => void;
-  setSearchQuery: (query: string) => void;
   setSidebarExpanded: (state: boolean) => void;
   toggleLogExpansion: (log: string) => void;
   setSidebarSizePx: (size: number) => void;
+  setActiveLog: (log: ApplicationLog | undefined) => void;
 };
 
-export const useLogsStore = create<LogsState>((set) => ({
-  // Initial State
-  app: "odoo18",
-  amount: 100,
-  isStreaming: false,
+export const useLogsLayoutStore = create<LogsState>((set) => ({
+  activeLog: undefined,
   sidebarExpanded: false,
-  searchQuery: "",
   expandedLogs: [],
-  sidebarSizePx: 500,
+  sidebarSizePx: 600,
 
-  // Setters
-  setApp: (app) => set({ app }),
-  setAmount: (amount) => set({ amount }),
-  setIsStreaming: (state) => set({ isStreaming: state }),
-  setSearchQuery: (query) => set({ searchQuery: query }),
+  setActiveLog: (log) => set({ activeLog: log }),
   setSidebarExpanded: (state) => set({ sidebarExpanded: state }),
   setSidebarSizePx: (size) => set({ sidebarSizePx: size }),
   toggleLogExpansion: (newLog) =>

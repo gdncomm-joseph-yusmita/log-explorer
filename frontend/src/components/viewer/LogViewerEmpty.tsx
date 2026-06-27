@@ -1,11 +1,11 @@
 import { Icon } from "@iconify/react";
 import Button from "../ui/Button";
-import { useLogsStore } from "../../stores/useLogsStore";
 import { useIsFetching, useQueryClient } from "@tanstack/react-query";
 import { logsQueryKeys } from "../../hooks/useLogsQuery";
+import { useLogsFilterStore } from "@/stores/useLogsFilterStore";
 
 export default function LogViewerEmpty() {
-  const { setSearchQuery, isStreaming, amount, app } = useLogsStore();
+  const { setSearchQuery, isStreaming, amount, app } = useLogsFilterStore();
   const queryClient = useQueryClient();
 
   const queryKey = logsQueryKeys.list({ amount, app });

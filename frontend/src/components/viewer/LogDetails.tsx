@@ -5,8 +5,8 @@ import type {
 import { cn } from "../../lib/utils";
 import { Icon } from "@iconify/react";
 import HighlightText from "../ui/HighlightText";
-import { useLogsStore } from "../../stores/useLogsStore";
-import { useLogsOptionsStore } from "@/stores/useLogsOptionsStore";
+import { useLogsFilterStore } from "@/stores/useLogsFilterStore";
+import { useLogsLayoutStore } from "@/stores/useLogsLayoutStore";
 
 type Props<T extends ApplicationLog> = {
   schema: ApplicationSchema<T>[];
@@ -14,8 +14,8 @@ type Props<T extends ApplicationLog> = {
 export default function LogDetails<T extends ApplicationLog>({
   schema,
 }: Props<T>) {
-  const { setActiveLog, activeLog } = useLogsOptionsStore();
-  const { searchQuery } = useLogsStore();
+  const { setActiveLog, activeLog } = useLogsLayoutStore();
+  const { searchQuery } = useLogsFilterStore();
 
   return (
     <div

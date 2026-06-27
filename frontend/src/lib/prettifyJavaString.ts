@@ -27,15 +27,19 @@ export function prettifyJavaString(logMessage: string): string {
       continue;
     }
 
-    if (char === "(" || char === "{") {
+    if (char === "(" || char === "{" || char === "[") {
       // Go down a line and increase indentation
       indentLevel++;
       result += char + "\n" + getIndent();
-    } else if (char === ")" || char === "}") {
+    } else if (char === ")" || char === "}" || char === "]") {
       // Go down a line, decrease indentation, and close parenthesis/bracket
       indentLevel--;
       // If the parenthesis is immediately closing, don't add a newline (e.g. empty constructors or objects)
-      if (logMessage[i - 1] === "(" || logMessage[i - 1] === "{") {
+      if (
+        logMessage[i - 1] === "(" ||
+        logMessage[i - 1] === "{" ||
+        logMessage[i - 1] === "["
+      ) {
         result = result.trimEnd() + char;
       } else {
         result += "\n" + getIndent() + char;

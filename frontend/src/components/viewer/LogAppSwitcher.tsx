@@ -1,16 +1,15 @@
 import { Icon } from "@iconify/react";
-import Button from "../ui/Button";
 import { applications, type Application } from "../../applications";
-import { useLogsStore } from "../../stores/useLogsStore";
 import { cn } from "../../lib/utils";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/Popover";
 import { useState } from "react";
-import { useLogsOptionsStore } from "@/stores/useLogsOptionsStore";
+import { useLogsFilterStore } from "@/stores/useLogsFilterStore";
+import { useLogsLayoutStore } from "@/stores/useLogsLayoutStore";
 
 export default function LogAppSwitcher() {
   const [isOpen, setIsOpen] = useState(false);
-  const { app, setApp } = useLogsStore();
-  const { setActiveLog } = useLogsOptionsStore();
+  const { app, setApp } = useLogsFilterStore();
+  const { setActiveLog } = useLogsLayoutStore();
 
   const selectedApp = applications[app];
 

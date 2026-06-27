@@ -69,8 +69,8 @@ export const middleware = createApplicationModule<MiddlewareLog>({
       header: "Message",
       key: "message",
       columnSize: "minmax(40rem,1fr)",
-      renderDetail: (val, searchQuery) => (
-        <HighlightText text={prettifyJavaString(val)} query={searchQuery} />
+      renderDetail: (value, searchQuery) => (
+        <HighlightText text={prettifyJavaString(value)} query={searchQuery} />
       ),
       render: (value, searchQuery) => (
         <span className="text-secondary">

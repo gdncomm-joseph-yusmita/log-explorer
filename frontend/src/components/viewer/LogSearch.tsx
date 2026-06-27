@@ -1,11 +1,11 @@
 import { Icon } from "@iconify/react";
-import { useLogsStore } from "../../stores/useLogsStore";
 import useDebounce from "../../hooks/useDebounce";
 import { useEffect, useState } from "react";
+import { useLogsFilterStore } from "@/stores/useLogsFilterStore";
 
 export default function LogSearch() {
   const [localSearchQuery, setLocalSearchQuery] = useState("");
-  const { setSearchQuery, searchQuery } = useLogsStore();
+  const { setSearchQuery, searchQuery } = useLogsFilterStore();
 
   useDebounce(localSearchQuery, { callback: setSearchQuery });
   useEffect(() => {

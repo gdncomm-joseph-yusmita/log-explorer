@@ -2,14 +2,14 @@ import LogViewer from "./components/viewer/LogViewer";
 import useLogsQuery from "./hooks/useLogsQuery";
 import { applications } from "./applications";
 import LogHeader from "./components/viewer/LogHeader";
-import { useLogsStore } from "./stores/useLogsStore";
 import { cn } from "./lib/utils";
-import { Icon } from "@iconify/react";
 
 import type { ApplicationSchema, ApplicationLog } from "./applications/types";
+import LogFooter from "./components/viewer/LogFooter";
+import { useLogsFilterStore } from "./stores/useLogsFilterStore";
 
 export default function App() {
-  const { app, amount, isStreaming } = useLogsStore();
+  const { app, amount, isStreaming, searchQuery } = useLogsFilterStore();
 
   const { data, isLoading } = useLogsQuery({
     amount,
@@ -17,6 +17,10 @@ export default function App() {
     stream: isStreaming,
   });
   const schema = applications[app].schema;
+
+  const filteredLogs = data?.filter((log) =>
+    log.raw.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
 
   return (
     <div
@@ -28,18 +32,14 @@ export default function App() {
         <LogHeader />
         <LogViewer
           schema={schema as ApplicationSchema<ApplicationLog>[]}
-          logs={data as ApplicationLog[]}
+          logs={filteredLogs as ApplicationLog[]}
           isLoading={isLoading}
         />
-        <div className="text-xs bg-background border-t border-border py-2 px-4 text-secondary">
-          <div className="flex items-center gap-2">
-            <Icon
-              icon={"material-symbols:info-outline"}
-              className="text-base"
-            />
-            Showing {data?.length || "--"} Entries
-          </div>
-        </div>
+        <LogFooter
+          allLogCount={data?.length || 0}
+          filteredLogCount={filteredLogs?.length || 0}
+          isLoading={isLoading}
+        />
       </div>
     </div>
   );

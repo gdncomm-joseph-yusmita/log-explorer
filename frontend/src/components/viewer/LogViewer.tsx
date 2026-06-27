@@ -4,10 +4,9 @@ import type {
 } from "../../applications/types";
 import LogViewerTable from "./LogViewerTable";
 import LogDetails from "./LogDetails";
-import { useLogsOptionsStore } from "@/stores/useLogsOptionsStore";
-import { useRef, useState } from "react";
-import { useLogsStore } from "@/stores/useLogsStore";
+import { useRef } from "react";
 import DraggableSidebar from "./DraggableSidebar";
+import { useLogsLayoutStore } from "@/stores/useLogsLayoutStore";
 
 type Props<T extends ApplicationLog> = {
   schema: ApplicationSchema<T>[];
@@ -15,16 +14,12 @@ type Props<T extends ApplicationLog> = {
   isLoading?: boolean;
 };
 
-const MIN_SIZE_PX = 300;
-const MAX_SIZE_PERCENT = 0.9;
-
 export default function LogViewer<T extends ApplicationLog>({
   schema,
   logs,
   isLoading,
 }: Props<T>) {
-  const { sidebarSizePx } = useLogsStore();
-  const { activeLog } = useLogsOptionsStore();
+  const { sidebarSizePx, activeLog } = useLogsLayoutStore();
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (

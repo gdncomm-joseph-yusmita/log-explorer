@@ -4,12 +4,12 @@ import Button from "../ui/Button";
 import LogSearch from "./LogSearch";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import { useIsFetching, useQueryClient } from "@tanstack/react-query";
-import { useLogsStore } from "../../stores/useLogsStore";
 import { logsQueryKeys } from "../../hooks/useLogsQuery";
 import LogAppSwitcher from "./LogAppSwitcher";
+import { useLogsFilterStore } from "@/stores/useLogsFilterStore";
 
 export default function LogHeader() {
-  const { isStreaming, setIsStreaming, amount, app } = useLogsStore();
+  const { isStreaming, setIsStreaming, amount, app } = useLogsFilterStore();
   const queryClient = useQueryClient();
 
   const queryKey = logsQueryKeys.list({ amount, app });

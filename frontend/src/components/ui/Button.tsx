@@ -5,7 +5,7 @@ import LoadingSpinner from "./LoadingSpinner";
 
 const variants = {
   default:
-    "disabled:opacity-50 disabled:hover:bg-primary bg-white text-black border border-border hover:bg-mist-50",
+    "disabled:opacity-50 disabled:hover:bg-primary bg-white text-black border border-border hover:bg-mist-50 hover:border-black/30",
   primary:
     "disabled:opacity-50 disabled:hover:bg-black bg-black text-white border border-none hover:bg-mist-700",
   accent:
