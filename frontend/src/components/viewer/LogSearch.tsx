@@ -20,7 +20,7 @@ export default function LogSearch() {
       />
       <input
         type="text"
-        className="border-border border bg-white w-full font-light text-xs pl-12 py-2.5 pr-3 rounded-lg ring-1 ring-transparent hover:ring-black focus:ring-black outline-none transition duration-100 "
+        className="border-border border bg-white w-full font-light text-xs pl-12 py-2.5 pr-3 rounded-md ring-1 ring-transparent hover:ring-black focus:ring-black outline-none transition duration-100 "
         placeholder="Search Here..."
         onChange={(e) => setLocalSearchQuery(e.target.value)}
         value={localSearchQuery}

@@ -9,6 +9,7 @@ type LogsState = {
   searchQuery: string;
   sidebarExpanded: boolean;
   expandedLogs: string[];
+  sidebarSizePx: number;
 
   // Actions
   setApp: (app: Application) => void;
@@ -17,16 +18,18 @@ type LogsState = {
   setSearchQuery: (query: string) => void;
   setSidebarExpanded: (state: boolean) => void;
   toggleLogExpansion: (log: string) => void;
+  setSidebarSizePx: (size: number) => void;
 };
 
 export const useLogsStore = create<LogsState>((set) => ({
   // Initial State
-  app: "middleware",
+  app: "odoo18",
   amount: 100,
   isStreaming: false,
   sidebarExpanded: false,
   searchQuery: "",
   expandedLogs: [],
+  sidebarSizePx: 500,
 
   // Setters
   setApp: (app) => set({ app }),
@@ -34,6 +37,7 @@ export const useLogsStore = create<LogsState>((set) => ({
   setIsStreaming: (state) => set({ isStreaming: state }),
   setSearchQuery: (query) => set({ searchQuery: query }),
   setSidebarExpanded: (state) => set({ sidebarExpanded: state }),
+  setSidebarSizePx: (size) => set({ sidebarSizePx: size }),
   toggleLogExpansion: (newLog) =>
     set((current) => {
       const alreadyExists = current.expandedLogs.find(

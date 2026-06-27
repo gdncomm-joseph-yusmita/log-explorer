@@ -1,5 +1,6 @@
 import { HOSTS, type Application } from "../config/config.js";
 import { websocket } from "../index.js";
+import { logger } from "./logger.js";
 import { tailLogs, type TailLogsReturnType } from "./tail-logs.js";
 import readline from "readline";
 
@@ -25,9 +26,8 @@ export async function streamLogs(app: Application) {
 
     const flushBuffer = () => {
       if (logBuffer) {
-        console.log("FLUSHING LOGS:", logBuffer);
-        websocket.emit("new-log", logBuffer.trim());
-        logBuffer = ""; // Reset the buffer!
+        websocket.emit(`new-log:${app}`, logBuffer.trim());
+        logBuffer = "";
       }
     };
 
@@ -43,17 +43,20 @@ export async function streamLogs(app: Application) {
       }
 
       // If the stream goes completely quiet for 50ms, assume the
-      // stack trace is fully finished writing and force a flush!
+      // stack trace is fully finished writing and force a flush
       flushTimeout = setTimeout(flushBuffer, 50);
     });
 
     sshStream.stderr?.on("data", (chunk: Buffer) => {
-      console.error(`[${app}] SSH Error:`, chunk.toString("utf-8"));
+      logger.error(
+        `[${app}] SSH Error:`,
+        chunk.toString("utf-8").trim().replaceAll("\n", ""),
+      );
     });
 
     // Attempt to reconnected if the stream died
     sshStream.catch?.((err: unknown) => {
-      console.error(`[${app}] Stream died, restarting in 5s...`, err);
+      logger.error(`[${app}] Stream died, restarting in 5s...`, err);
       delete activeStreams[app];
       setTimeout(() => streamLogs(app), 5000);
     });

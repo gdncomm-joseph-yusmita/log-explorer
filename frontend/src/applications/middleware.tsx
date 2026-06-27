@@ -18,11 +18,13 @@ const infoColors = {
 };
 
 export const middleware = createApplicationModule<MiddlewareLog>({
-  columns: [
+  name: "Middleware",
+  icon: "devicon:spring",
+  schema: [
     {
       header: "Time",
       key: "time",
-      columnSize: "minmax(5rem,10rem)",
+      columnSize: "10rem",
       render: (val) => {
         if (!val) return <span className="text-gray-500">--</span>;
         const [date, time] = val.split("T");
@@ -44,12 +46,12 @@ export const middleware = createApplicationModule<MiddlewareLog>({
     {
       header: "Caller",
       key: "caller",
-      columnSize: "minmax(4rem,14rem)",
+      columnSize: "14rem",
     },
     {
       header: "Status",
       key: "status",
-      columnSize: "minmax(4rem,5rem)",
+      columnSize: "5rem",
       render: (val) => {
         return (
           <span
@@ -66,7 +68,7 @@ export const middleware = createApplicationModule<MiddlewareLog>({
     {
       header: "Message",
       key: "message",
-      columnSize: "1fr",
+      columnSize: "minmax(40rem,1fr)",
       renderDetail: (val, searchQuery) => (
         <HighlightText text={prettifyJavaString(val)} query={searchQuery} />
       ),

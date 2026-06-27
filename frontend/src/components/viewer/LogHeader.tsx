@@ -6,24 +6,27 @@ import LoadingSpinner from "../ui/LoadingSpinner";
 import { useIsFetching, useQueryClient } from "@tanstack/react-query";
 import { useLogsStore } from "../../stores/useLogsStore";
 import { logsQueryKeys } from "../../hooks/useLogsQuery";
-import LogSidebar from "./LogSidebar";
+import LogAppSwitcher from "./LogAppSwitcher";
 
 export default function LogHeader() {
-  const {
-    isStreaming,
-    setIsStreaming,
-    amount,
-    app,
-    setSidebarExpanded,
-    sidebarExpanded,
-  } = useLogsStore();
+  const { isStreaming, setIsStreaming, amount, app } = useLogsStore();
   const queryClient = useQueryClient();
 
   const queryKey = logsQueryKeys.list({ amount, app });
   const handleChangeLiveMode = () => {
+    const nextIsStreamingState = !isStreaming;
+
+    if (nextIsStreamingState) {
+      // HACK: we're using query selector to prevent prop
+      // drilling refs throughout a bunch of components
+      document
+        .querySelector(".viewer-body")
+        ?.scrollTo({ top: 0, behavior: "auto" });
+    }
+
     // Refresh the query
     queryClient.invalidateQueries({ queryKey });
-    setIsStreaming(!isStreaming);
+    setIsStreaming(nextIsStreamingState);
   };
 
   const handleRefresh = () => {
@@ -34,16 +37,9 @@ export default function LogHeader() {
   const isRefetchingLogs = activeQueryRefetchCount > 0 || isStreaming;
 
   return (
-    <div>
+    <div className="">
       <div className="flex p-4 pb-2 gap-2 items-center">
-        <Button
-          className="px-2.5"
-          onClick={() => {
-            setSidebarExpanded(!sidebarExpanded);
-          }}
-        >
-          <Icon className="text-lg" icon={"lucide:sidebar"} />
-        </Button>
+        <LogAppSwitcher />
         <LogSearch />
         <Button
           className={cn("py-2.5 gap-2", isStreaming && "border-accent")}

@@ -2,7 +2,7 @@ export type ApplicationLog = Record<string, string | number | boolean> & {
   raw: string;
 };
 
-export type ApplicationColumn<T extends ApplicationLog> = {
+export type ApplicationSchema<T extends ApplicationLog> = {
   [K in keyof T]: {
     header: string;
     key: K;
@@ -15,20 +15,16 @@ export type ApplicationColumn<T extends ApplicationLog> = {
   };
 }[keyof T];
 
-export function createColumns<T extends ApplicationLog>(
-  columns: ApplicationColumn<T>[],
-) {
-  return columns;
-}
-
 export type ApplicationModule<T extends ApplicationLog> = {
   parse: (rawLog: string) => T | undefined;
-  columns: ApplicationColumn<T>[];
+  columns: ApplicationSchema<T>[];
 };
 
 export function createApplicationModule<T extends ApplicationLog>(opts: {
+  name: string;
+  icon: string;
   parseFn: (rawLog: string) => T | undefined;
-  columns: ApplicationColumn<T>[];
+  schema: ApplicationSchema<T>[];
 }) {
   return opts;
 }

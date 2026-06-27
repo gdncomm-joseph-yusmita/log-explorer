@@ -1,4 +1,8 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { API } from "../api/api";
 import type { APISuccessResponse } from "../api/types";
 import { applications, type Application } from "../applications";
@@ -55,22 +59,21 @@ export default function useLogsQuery({
     const handleConnect = () => console.log("Connected to server!");
     const handleNewLog = (log: string) => {
       const key = logsQueryKeys.list({ amount, app });
-      queryClient.setQueryData(key, (current: typeof query.data) => {
-        const parsed = parseLog(log);
-        if (!current) return [parsed];
-        return [...current, parseLog];
+      queryClient.setQueryData(key, (current: string[] | undefined) => {
+        if (!current) return [log];
+        return [...current, log];
       });
     };
 
-    socket.on("new-log", handleNewLog);
+    socket.on(`new-log:${app}`, handleNewLog);
     socket.on("connect", handleConnect);
 
     return () => {
+      socket.off(`new-log:${app}`, handleNewLog);
       socket.off("connect", handleConnect);
-      socket.off("new-log", handleNewLog);
       socket.disconnect();
     };
-  }, [stream]);
+  }, [stream, app]);
 
   return query;
 }

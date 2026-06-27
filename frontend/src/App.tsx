@@ -1,50 +1,44 @@
-import { useState } from "react";
 import LogViewer from "./components/viewer/LogViewer";
-import LogDetails from "./components/viewer/LogDetails";
 import useLogsQuery from "./hooks/useLogsQuery";
 import { applications } from "./applications";
 import LogHeader from "./components/viewer/LogHeader";
 import { useLogsStore } from "./stores/useLogsStore";
-import LogSidebar from "./components/viewer/LogSidebar";
 import { cn } from "./lib/utils";
+import { Icon } from "@iconify/react";
+
+import type { ApplicationSchema, ApplicationLog } from "./applications/types";
 
 export default function App() {
-  const { app, amount, isStreaming, sidebarExpanded } = useLogsStore();
+  const { app, amount, isStreaming } = useLogsStore();
 
   const { data, isLoading } = useLogsQuery({
     amount,
     app,
     stream: isStreaming,
   });
-  const columns = applications[app].columns;
-
-  const [activeLog, setActiveLog] = useState<
-    NonNullable<typeof data>[number] | undefined
-  >();
+  const schema = applications[app].schema;
 
   return (
     <div
       className={cn(
-        "h-dvh overflow-hidden bg-background grid content-stretch transition-[grid-template-columns] transition-easing duration-300",
-        sidebarExpanded ? "grid-cols-[15rem_1fr]" : "grid-cols-[0rem_1fr]",
+        "h-dvh overflow-hidden bg-background grid content-stretch ",
       )}
     >
-      <LogSidebar />
       <div className="flex flex-col h-full min-w-0 min-h-0">
         <LogHeader />
-        <div className="relative flex-1 flex flex-col min-h-0">
-          <LogViewer
-            columns={columns}
-            logs={data}
-            onSelect={setActiveLog}
-            activeLog={activeLog}
-            isLoading={isLoading}
-          />
-          <LogDetails
-            columns={columns}
-            log={activeLog}
-            onClose={() => setActiveLog(undefined)}
-          />
+        <LogViewer
+          schema={schema as ApplicationSchema<ApplicationLog>[]}
+          logs={data as ApplicationLog[]}
+          isLoading={isLoading}
+        />
+        <div className="text-xs bg-background border-t border-border py-2 px-4 text-secondary">
+          <div className="flex items-center gap-2">
+            <Icon
+              icon={"material-symbols:info-outline"}
+              className="text-base"
+            />
+            Showing {data?.length || "--"} Entries
+          </div>
         </div>
       </div>
     </div>

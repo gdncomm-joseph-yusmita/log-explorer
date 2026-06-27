@@ -18,8 +18,8 @@ export const HOSTS: Record<
   odoo18: {
     logDir: "/var/log/odoo/openerp-server.log",
     host: "odoo18-multi-app-1.gtn-qa-jkt.cld",
-    // TODO: CHANGE LATER
-    logStartRegex: /(?=^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})/m,
+    // Odoo format: YYYY-MM-DD HH:MM:SS,ms
+    logStartRegex: /(?=^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3})/m,
   },
 } as const;
 
