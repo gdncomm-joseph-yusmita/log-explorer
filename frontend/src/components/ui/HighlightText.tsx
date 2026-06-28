@@ -12,7 +12,7 @@ export default function HighlightText({ text, query }: Props) {
         part.toLowerCase() === query.toLowerCase() ? (
           <mark
             key={i}
-            className="bg-yellow-200 text-primary [html.dark_&]:text-foreground rounded-sm px-0.5"
+            className="bg-yellow-200 [html.dark_&]:bg-yellow-200/90 text-white [html.dark_&]:text-foreground rounded-sm"
           >
             {part}
           </mark>
