@@ -1,6 +1,7 @@
 import { create } from "zustand";
-import type { Application } from "../applications";
+import { applications, type Application } from "../applications";
 import { rowsAmount } from "@/components/viewer/LogFooter";
+import type { ApplicationSchema } from "@/applications/types";
 
 type LogsState = {
   app: Application;
@@ -21,10 +22,7 @@ export const useLogsFilterStore = create<LogsState>((set) => ({
 
   amount: rowsAmount[1],
   isStreaming: false,
-  sidebarExpanded: false,
   searchQuery: "",
-  expandedLogs: [],
-  sidebarSizePx: 500,
 
   setApp: (app) => {
     localStorage.setItem("logs.filter.app", app);

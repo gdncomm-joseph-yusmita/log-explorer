@@ -9,21 +9,21 @@ import { Icon } from "@iconify/react";
 import LogViewerEmpty from "./LogViewerEmpty";
 import { useLogsFilterStore } from "@/stores/useLogsFilterStore";
 import { useLogsLayoutStore } from "@/stores/useLogsLayoutStore";
+import { applications } from "@/applications";
 
 type Props<T extends ApplicationLog> = {
-  schema: ApplicationSchema<T>[];
   logs?: T[];
   isLoading?: boolean;
 };
 
 export default function LogViewerTable<T extends ApplicationLog>({
-  schema,
   logs,
   isLoading,
 }: Props<T>) {
   const { activeLog, setActiveLog, toggleLogExpansion, expandedLogs } =
     useLogsLayoutStore();
-  const { searchQuery } = useLogsFilterStore();
+  const { searchQuery, app } = useLogsFilterStore();
+  const schema = applications[app].schema;
 
   const gridTemplateColumns =
     "0.25rem " +
@@ -43,8 +43,11 @@ export default function LogViewerTable<T extends ApplicationLog>({
             {schema.map((col, i) => {
               if (col.hidden) return;
               return (
-                <li key={i} className="text-secondary text-xs font-light">
-                  {col.header}
+                <li
+                  key={i}
+                  className="font-[Geist_Mono]! text-secondary text-xs font-light"
+                >
+                  {col.header.toUpperCase()}
                 </li>
               );
             })}
@@ -123,7 +126,7 @@ export default function LogViewerTable<T extends ApplicationLog>({
                         key={`row-${i}:col-${j}`}
                       >
                         {col.render ? (
-                          col.render(log[col.key], searchQuery)
+                          col.render(log[col.key].toString(), searchQuery)
                         ) : (
                           <HighlightText
                             text={String(log[col.key])}

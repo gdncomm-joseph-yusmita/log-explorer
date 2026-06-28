@@ -43,14 +43,25 @@ export default function LogHeader() {
         <LogAppSwitcher />
         <LogSearch />
         <Button
-          className={cn("py-2.5 gap-2", isStreaming && "border-accent")}
+          className={cn(
+            "py-2.5 gap-2",
+            isStreaming &&
+              "border-accent hover:border-accent/80 hover:bg-accent/10",
+          )}
           onClick={handleChangeLiveMode}
         >
           <Icon
             icon={isStreaming ? "boxicons:stop-circle" : "boxicons:play-circle"}
-            className={cn("text-lg", isStreaming && "text-accent")}
+            className={cn("text-lg", isStreaming && "text-accent-foreground")}
           />
-          <p className={cn("font-light", isStreaming && "text-accent")}>Live</p>
+          <p
+            className={cn(
+              "font-light text-xs",
+              isStreaming && "text-accent-foreground",
+            )}
+          >
+            Live
+          </p>
         </Button>
         <Button
           onClick={handleRefresh}

@@ -1,5 +1,6 @@
 export type ApplicationLog = Record<string, string | number | boolean> & {
   raw: string;
+  message: string;
 };
 
 export type ApplicationSchema<T extends ApplicationLog> = {
@@ -8,6 +9,7 @@ export type ApplicationSchema<T extends ApplicationLog> = {
     key: K;
     hidden?: boolean;
     columnSize?: string;
+    formatter?: (value: string) => string;
 
     // Render functions receive the specific value
     render?: (val: T[K], searchQuery?: string) => React.ReactNode;

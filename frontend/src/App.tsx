@@ -4,7 +4,6 @@ import { applications } from "./applications";
 import LogHeader from "./components/viewer/LogHeader";
 import { cn } from "./lib/utils";
 
-import type { ApplicationSchema, ApplicationLog } from "./applications/types";
 import LogFooter from "./components/viewer/LogFooter";
 import { useLogsFilterStore } from "./stores/useLogsFilterStore";
 
@@ -16,7 +15,6 @@ export default function App() {
     app,
     stream: isStreaming,
   });
-  const schema = applications[app].schema;
 
   const filteredLogs = data?.filter((log) =>
     log.raw.toLowerCase().includes(searchQuery.toLowerCase()),
@@ -30,11 +28,7 @@ export default function App() {
     >
       <div className="flex flex-col h-full min-w-0 min-h-0">
         <LogHeader />
-        <LogViewer
-          schema={schema as ApplicationSchema<ApplicationLog>[]}
-          logs={filteredLogs as ApplicationLog[]}
-          isLoading={isLoading}
-        />
+        <LogViewer logs={filteredLogs} isLoading={isLoading} />
         <LogFooter
           allLogCount={data?.length || 0}
           filteredLogCount={filteredLogs?.length || 0}

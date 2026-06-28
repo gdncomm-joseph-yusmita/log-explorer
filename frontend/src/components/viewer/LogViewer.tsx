@@ -7,15 +7,15 @@ import LogDetails from "./LogDetails";
 import { useRef } from "react";
 import DraggableSidebar from "./DraggableSidebar";
 import { useLogsLayoutStore } from "@/stores/useLogsLayoutStore";
+import { applications } from "@/applications";
+import { useLogsFilterStore } from "@/stores/useLogsFilterStore";
 
 type Props<T extends ApplicationLog> = {
-  schema: ApplicationSchema<T>[];
   logs?: T[];
   isLoading?: boolean;
 };
 
 export default function LogViewer<T extends ApplicationLog>({
-  schema,
   logs,
   isLoading,
 }: Props<T>) {
@@ -31,16 +31,10 @@ export default function LogViewer<T extends ApplicationLog>({
         }}
         ref={containerRef}
       >
-        <LogViewerTable
-          schema={schema as ApplicationSchema<ApplicationLog>[]}
-          logs={logs}
-          isLoading={isLoading}
-        />
+        <LogViewerTable logs={logs} isLoading={isLoading} />
         <div className="relative bg-background h-full min-h-0">
           <DraggableSidebar containerRef={containerRef}>
-            <LogDetails
-              schema={schema as ApplicationSchema<ApplicationLog>[]}
-            />
+            <LogDetails />
           </DraggableSidebar>
         </div>
       </div>

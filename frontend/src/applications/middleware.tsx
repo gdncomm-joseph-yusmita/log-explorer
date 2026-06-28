@@ -1,4 +1,5 @@
 import HighlightText from "../components/ui/HighlightText";
+import StatusBadge from "../components/ui/StatusBadge";
 import { prettifyJavaString } from "../lib/prettifyJavaString";
 import { createApplicationModule } from "./types";
 
@@ -9,12 +10,6 @@ type MiddlewareLog = {
   caller: string;
   message: string;
   raw: string;
-};
-
-const infoColors = {
-  INFO: "var(--accent)",
-  ERROR: "hsla(348, 83%, 53%, 0.8)",
-  WARN: "hsla(28, 83%, 53%, 1)",
 };
 
 export const middleware = createApplicationModule<MiddlewareLog>({
@@ -53,22 +48,14 @@ export const middleware = createApplicationModule<MiddlewareLog>({
       key: "status",
       columnSize: "5rem",
       render: (val) => {
-        return (
-          <span
-            style={{
-              background: infoColors[val as keyof typeof infoColors] || "gray",
-            }}
-            className="text-background [html.dark_&]:text-primary px-1 rounded-sm text-[0.7rem]"
-          >
-            {val}
-          </span>
-        );
+        return <StatusBadge status={val} />;
       },
     },
     {
       header: "Message",
       key: "message",
-      columnSize: "minmax(40rem,1fr)",
+      columnSize: "minmax(37.5rem,1fr)",
+      formatter: prettifyJavaString,
       renderDetail: (value, searchQuery) => (
         <HighlightText text={prettifyJavaString(value)} query={searchQuery} />
       ),

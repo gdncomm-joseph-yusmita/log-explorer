@@ -1,4 +1,5 @@
 import { createApplicationModule } from "./types";
+import StatusBadge from "../components/ui/StatusBadge";
 
 type Odoo18Logs = {
   time: string;
@@ -11,11 +12,7 @@ type Odoo18Logs = {
   raw: string;
 };
 
-const infoColors = {
-  INFO: "hsla(212, 100%, 48%, 1)",
-  ERROR: "hsla(348, 83%, 53%, 0.8)",
-  WARNING: "hsla(28, 83%, 53%, 1)",
-};
+
 
 export const odoo18 = createApplicationModule<Odoo18Logs>({
   name: "Odoo Multi",
@@ -43,16 +40,7 @@ export const odoo18 = createApplicationModule<Odoo18Logs>({
       key: "status",
       columnSize: "5rem",
       render: (val) => {
-        return (
-          <span
-            style={{
-              background: infoColors[val as keyof typeof infoColors] || "gray",
-            }}
-            className="text-background [body.dark_&]:text-primary px-1 rounded-sm text-[0.7rem]"
-          >
-            {val}
-          </span>
-        );
+        return <StatusBadge status={val} />;
       },
     },
     {
