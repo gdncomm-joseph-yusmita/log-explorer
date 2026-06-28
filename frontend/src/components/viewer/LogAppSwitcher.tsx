@@ -18,26 +18,29 @@ export default function LogAppSwitcher() {
       <PopoverTrigger>
         <div
           className={cn(
-            "flex items-center gap-4 bg-white border border-border hover:bg-mist-50 px-3 py-2 rounded-md cursor-pointer",
+            "flex items-center gap-4 bg-input border border-border-strong hover:bg-input-highlight hover:border-border-strong-highlight px-3 py-2 rounded-md cursor-pointer",
           )}
         >
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2.5 text-primary">
             <Icon className="text-base" icon={selectedApp.icon} />
             <p className="text-sm font-light truncate">{selectedApp.name}</p>
           </div>
-          <Icon className="text-base" icon={"mdi:chevron-up-down"} />
+          <Icon
+            className="text-base text-primary"
+            icon={"mdi:chevron-up-down"}
+          />
         </div>
       </PopoverTrigger>
       <PopoverContent align="start">
-        <ul className="p-1.5 min-w-64">
+        <ul className="p-1.5 min-w-64 bg-foreground">
           {Object.entries(applications).map(([name, application]) => {
             const isActive = name === app;
             return (
               <div
                 key={name}
                 className={cn(
-                  "flex items-center justify-between gap-2.5 hover:bg-mist-100 px-3 py-2 rounded-md cursor-pointer",
-                  isActive && "bg-secondary/10",
+                  "flex items-center justify-between gap-2.5 text-secondary hover:bg-selection px-3 py-2 transition duration-75 hover:text-primary-highlight rounded-md cursor-pointer",
+                  isActive && "bg-selection text-primary",
                 )}
                 onClick={() => {
                   setApp(name as Application);
@@ -52,7 +55,7 @@ export default function LogAppSwitcher() {
                   <p className="text-sm font-light">{application.name}</p>
                 </div>
                 {isActive && (
-                  <div className="w-1.5 ring-secondary ring-offset-2 ring aspect-square rounded-full bg-black"></div>
+                  <div className="w-1.5 ring-secondary ring-offset-2 ring aspect-square rounded-full bg-primary"></div>
                 )}
               </div>
             );

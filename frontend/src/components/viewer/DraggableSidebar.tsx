@@ -57,7 +57,7 @@ export default function DraggableSidebar({
       */}
       {isDragging && <div className="fixed inset-0 z-9999 cursor-e-resize" />}
       <div
-        className="absolute left-0 top-0 bottom-0 w-2 cursor-e-resize z-10 hover:bg-mist-50"
+        className="absolute left-0 top-0 bottom-0 w-2 cursor-e-resize z-10 hover:bg-input-highlight"
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}

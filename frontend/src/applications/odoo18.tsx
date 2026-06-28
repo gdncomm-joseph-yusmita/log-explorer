@@ -32,8 +32,8 @@ export const odoo18 = createApplicationModule<Odoo18Logs>({
           <span>
             <span className="text-secondary">{date}</span>
             <span> </span>
-            <span className="text-gray-500">{hms},</span>
-            <span className="text-black">{ms}</span>
+            <span className="text-secondary">{hms},</span>
+            <span className="text-primary">{ms}</span>
           </span>
         );
       },
@@ -48,7 +48,7 @@ export const odoo18 = createApplicationModule<Odoo18Logs>({
             style={{
               background: infoColors[val as keyof typeof infoColors] || "gray",
             }}
-            className="text-white px-1 rounded-sm text-[0.7rem]"
+            className="text-background [body.dark_&]:text-primary px-1 rounded-sm text-[0.7rem]"
           >
             {val}
           </span>

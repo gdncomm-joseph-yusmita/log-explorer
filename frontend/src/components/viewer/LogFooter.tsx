@@ -23,23 +23,24 @@ export default function LogFooter({
   const { amount, setAmount } = useLogsFilterStore();
 
   return (
-    <div className="text-xs bg-background border-t border-border py-1.5 px-4 text-secondary">
+    <div className="text-xs bg-foreground border-t border-border py-1.5 px-4 text-secondary">
       <div className="flex justify-between items-center">
         {!isLoading ? (
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <Icon
               icon={"material-symbols:info-outline"}
-              className="text-base"
+              className="text-base text-secondary/50"
             />
-            Showing<span className="text-black">{filteredLogCount}</span>out of
-            <span className="text-black">{allLogCount}</span>queried logs.
+            Showing<span className="text-primary">{filteredLogCount}</span>out
+            of
+            <span className="text-primary">{allLogCount}</span>queried logs.
           </div>
         ) : (
           <Skeleton containerClassName="w-72 h-4 flex" className="flex" />
         )}
         <Popover open={isOpen} onOpenChange={setIsOpen}>
-          <PopoverTrigger>
-            <Button className="text-xs border border-border bg-white px-4 py-1 rounded-md text-black">
+          <PopoverTrigger asChild>
+            <Button className="text-xs px-4 py-1 rounded-md text-primary">
               {amount} Rows
             </Button>
           </PopoverTrigger>
@@ -51,8 +52,8 @@ export default function LogFooter({
                   <li
                     key={i}
                     className={cn(
-                      "text-xs py-2 px-4 text-start text-secondary hover:text-black/80 rounded-sm hover:bg-mist-100 cursor-pointer transition duration-75",
-                      isActive && "bg-mist-100 text-black",
+                      "text-xs py-2 px-4 text-start text-secondary hover:text-primary/80 rounded-sm hover:bg-selection cursor-pointer transition duration-75",
+                      isActive && "bg-selection text-primary",
                     )}
                     onClick={() => {
                       setAmount(row);

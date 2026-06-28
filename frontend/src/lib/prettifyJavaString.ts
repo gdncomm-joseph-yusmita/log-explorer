@@ -4,6 +4,7 @@
 
 export function prettifyJavaString(logMessage: string): string {
   let indentLevel = 0;
+  let inKeywordDepth = 0;
   const INDENT_SIZE = 4; // 2 spaces per indentation level
   let result = "";
   let insideQuotes = false;
@@ -27,25 +28,30 @@ export function prettifyJavaString(logMessage: string): string {
       continue;
     }
 
-    if (char === "(" || char === "{" || char === "[") {
-      // Go down a line and increase indentation
+    if (char === "(" || char === "{") {
+      inKeywordDepth++;
       indentLevel++;
       result += char + "\n" + getIndent();
-    } else if (char === ")" || char === "}" || char === "]") {
-      // Go down a line, decrease indentation, and close parenthesis/bracket
+    } else if (char === "[" && inKeywordDepth > 0) {
+      indentLevel++;
+      result += char + "\n" + getIndent();
+    } else if (char === ")" || char === "}") {
+      inKeywordDepth--;
       indentLevel--;
-      // If the parenthesis is immediately closing, don't add a newline (e.g. empty constructors or objects)
-      if (
-        logMessage[i - 1] === "(" ||
-        logMessage[i - 1] === "{" ||
-        logMessage[i - 1] === "["
-      ) {
+      if (logMessage[i - 1] === "(" || logMessage[i - 1] === "{") {
         result = result.trimEnd() + char;
       } else {
         result += "\n" + getIndent() + char;
       }
-    } else if (char === "," && logMessage[i + 1] === " ") {
-      // Found a comma followed by a space: go down a line
+    } else if (char === "]" && inKeywordDepth > 0) {
+      indentLevel--;
+      if (logMessage[i - 1] === "[") {
+        result = result.trimEnd() + char;
+      } else {
+        result += "\n" + getIndent() + char;
+      }
+    } else if (char === "," && logMessage[i + 1] === " " && inKeywordDepth > 0) {
+      // Found a comma followed by a space inside a keyword: go down a line
       result += ",\n" + getIndent();
       i++; // Skip the trailing space so it doesn't mess up our indentation
     } else {

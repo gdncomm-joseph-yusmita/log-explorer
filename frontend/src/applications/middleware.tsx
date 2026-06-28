@@ -12,7 +12,7 @@ type MiddlewareLog = {
 };
 
 const infoColors = {
-  INFO: "hsla(212, 100%, 48%, 1)",
+  INFO: "var(--accent)",
   ERROR: "hsla(348, 83%, 53%, 0.8)",
   WARN: "hsla(28, 83%, 53%, 1)",
 };
@@ -26,7 +26,7 @@ export const middleware = createApplicationModule<MiddlewareLog>({
       key: "time",
       columnSize: "10rem",
       render: (val) => {
-        if (!val) return <span className="text-gray-500">--</span>;
+        if (!val) return <span className="text-secondary">--</span>;
         const [date, time] = val.split("T");
         return date && time ? (
           <>
@@ -58,7 +58,7 @@ export const middleware = createApplicationModule<MiddlewareLog>({
             style={{
               background: infoColors[val as keyof typeof infoColors] || "gray",
             }}
-            className="text-white px-1 rounded-sm text-[0.7rem]"
+            className="text-background [html.dark_&]:text-primary px-1 rounded-sm text-[0.7rem]"
           >
             {val}
           </span>
@@ -73,7 +73,7 @@ export const middleware = createApplicationModule<MiddlewareLog>({
         <HighlightText text={prettifyJavaString(value)} query={searchQuery} />
       ),
       render: (value, searchQuery) => (
-        <span className="text-secondary">
+        <span className="text-muted">
           <HighlightText text={value} query={searchQuery} />
         </span>
       ),
@@ -85,7 +85,7 @@ export const middleware = createApplicationModule<MiddlewareLog>({
     },
   ],
   parseFn: (rawLog: string) => {
-    const TIME = `^(\\S+)`; // Group 1: Starts at beginning, captures non-whitespace
+    const TIME = `^(\\S+)`; // Group 1: Starts at beginning, captures non-backgroundspace
     const SPACE = `\\s+`; // Matches one or more spaces (used to connect tokens)
     const THREAD = `\\[(.*?)\\]`; // Group 2: Matches brackets, captures content lazily
     const STATUS = `(\\w+)`; // Group 3: Captures word chars (INFO, ERROR, etc.)

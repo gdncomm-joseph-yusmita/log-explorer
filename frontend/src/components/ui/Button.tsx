@@ -5,15 +5,15 @@ import LoadingSpinner from "./LoadingSpinner";
 
 const variants = {
   default:
-    "disabled:opacity-50 disabled:hover:bg-primary bg-white text-black border border-border hover:bg-mist-50 hover:border-black/30",
+    "disabled:opacity-50 disabled:hover:bg-primary bg-input text-primary border border-border-strong hover:bg-input-highlight hover:border-border-strong-highlight",
   primary:
-    "disabled:opacity-50 disabled:hover:bg-black bg-black text-white border border-none hover:bg-mist-700",
+    "disabled:opacity-50 disabled:hover:bg-primary bg-primary text-background border border-none hover:bg-primary-highlight",
   accent:
-    "disabled:opacity-50 disabled:bg-secondary bg-accent text-white hover:bg-accent/75 shadow-[0_0_4px_0px_#3033fe4e]",
+    "disabled:opacity-50 disabled:bg-secondary bg-accent text-background hover:bg-accent/75 shadow-[0_0_4px_0px_#3033fe4e]",
   danger:
-    "disabled:opacity-50 disabled:bg-secondary bg-[#EA4E4E] text-white hover:bg-[#EA4E4E]/75 shadow-[0_0_14px_1px_rgba(255,17,17,0.21)]",
+    "disabled:opacity-50 disabled:bg-secondary bg-danger text-background hover:bg-danger/75 shadow-danger-glow",
   ghost:
-    "disabled:opacity-50 bg-[#F9F9FB] text-primary hover:opacity-50 border shadow-[0_0_4px_0px_#e8e9ff4e]",
+    "disabled:opacity-50 bg-surface-light text-primary hover:opacity-50 border shadow-surface-glow",
 };
 type Props = {
   children: ReactNode;

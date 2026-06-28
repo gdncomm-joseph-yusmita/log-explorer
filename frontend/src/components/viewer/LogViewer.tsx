@@ -36,7 +36,7 @@ export default function LogViewer<T extends ApplicationLog>({
           logs={logs}
           isLoading={isLoading}
         />
-        <div className="overflow-y-auto relative bg-white">
+        <div className="relative bg-background h-full min-h-0">
           <DraggableSidebar containerRef={containerRef}>
             <LogDetails
               schema={schema as ApplicationSchema<ApplicationLog>[]}

@@ -7,6 +7,7 @@ import { useIsFetching, useQueryClient } from "@tanstack/react-query";
 import { logsQueryKeys } from "../../hooks/useLogsQuery";
 import LogAppSwitcher from "./LogAppSwitcher";
 import { useLogsFilterStore } from "@/stores/useLogsFilterStore";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 export default function LogHeader() {
   const { isStreaming, setIsStreaming, amount, app } = useLogsFilterStore();
@@ -69,6 +70,7 @@ export default function LogHeader() {
             className={cn("text-lg pl-px", isRefetchingLogs && "invisible")}
           />
         </Button>
+        <ThemeSwitcher />
       </div>
     </div>
   );

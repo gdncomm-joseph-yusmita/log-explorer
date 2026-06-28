@@ -12,8 +12,34 @@
       href="https://fonts.googleapis.com/css2?family=Geist+Mono:ital,wght@0,100..900;1,100..900&family=Stack+Sans+Text:wght@200..700&display=swap"
       rel="stylesheet"
     />
+    <style>
+      html.dark body {
+        background-color: hsla(0, 0%, 9%, 1);
+        color: hsla(0, 0%, 90%, 1);
+      }
+    </style>
+    <script>
+      (function () {
+        try {
+          var savedTheme = localStorage.getItem("theme");
+
+          // var systemThemeDark = window.matchMedia(
+          //   "(prefers-color-scheme: dark)",
+          // ).matches;
+
+          if (savedTheme === "dark" || (!savedTheme && systemThemeDark)) {
+            document.documentElement.classList.add("dark");
+          } else {
+            document.documentElement.classList.remove("dark");
+          }
+        } catch (e) {
+          console.error("Theme script failed", e);
+        }
+      })();
+    </script>
   </head>
-  <body>
+  <!-- <body class="dark"> -->
+  <body class="">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

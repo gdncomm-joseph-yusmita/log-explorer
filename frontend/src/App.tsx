@@ -25,7 +25,7 @@ export default function App() {
   return (
     <div
       className={cn(
-        "h-dvh overflow-hidden bg-background grid content-stretch ",
+        "h-dvh overflow-hidden bg-foreground grid content-stretch ",
       )}
     >
       <div className="flex flex-col h-full min-w-0 min-h-0">

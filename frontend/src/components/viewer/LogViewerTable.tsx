@@ -34,16 +34,16 @@ export default function LogViewerTable<T extends ApplicationLog>({
     ` 1rem`;
 
   return (
-    <div className="flex flex-col flex-1 min-h-0 overflow-auto relative">
+    <div className="flex flex-col flex-1 min-h-0 overflow-auto relative viewer-body">
       <div className="flex flex-col flex-1 min-w-full w-fit">
-        <div className="grid  bg-background grid-cols-[2rem_1fr] border-y border-border sticky left-0 right-0 top-0 z-10">
+        <div className="grid  bg-foreground grid-cols-[2rem_1fr] border-y border-border sticky left-0 right-0 top-0 z-10">
           <div></div>
           <ul className="grid px-3 py-2 " style={{ gridTemplateColumns }}>
             <div></div>
             {schema.map((col, i) => {
               if (col.hidden) return;
               return (
-                <li key={i} className="text-gray-500 text-xs font-light">
+                <li key={i} className="text-secondary text-xs font-light">
                   {col.header}
                 </li>
               );
@@ -52,7 +52,7 @@ export default function LogViewerTable<T extends ApplicationLog>({
           </ul>
         </div>
 
-        <ul className="p-2 flex-1 min-h-0 bg-white viewer-body">
+        <ul className="p-2 flex-1 min-h-0 bg-background">
           {/* <div className=""></div> */}
           {!isLoading && logs && logs.length <= 0 && <LogViewerEmpty />}
           {isLoading &&
@@ -75,11 +75,11 @@ export default function LogViewerTable<T extends ApplicationLog>({
             return (
               <div
                 key={`item-${i}`}
-                className="relative grid grid-cols-[2rem_1fr] odd:bg-mist-50 rounded-md mb-0.5"
+                className="relative grid grid-cols-[2rem_1fr] odd:bg-background-highlight rounded-md mb-0.5"
               >
                 <div
                   className={cn(
-                    " flex items-center flex-col justify-center rounded-sm self-start aspect-square hover:bg-mist-100 cursor-pointer h-fit",
+                    " flex items-center flex-col justify-center rounded-sm self-start aspect-square hover:bg-selection cursor-pointer h-fit",
                     !isActive && "",
                   )}
                   onClick={() => {
@@ -103,8 +103,8 @@ export default function LogViewerTable<T extends ApplicationLog>({
                   className={cn(
                     "grid rounded-md cursor-pointer items-start",
                     isActive
-                      ? "bg-gray-200! opacity-100"
-                      : "hover:bg-mist-100 hover:has-[.expand:hover]:bg-transparent opacity-90",
+                      ? "bg-border! opacity-100"
+                      : "hover:bg-selection hover:has-[.expand:hover]:bg-transparent opacity-90",
                   )}
                   style={{ gridTemplateColumns }}
                   key={i}
@@ -115,7 +115,7 @@ export default function LogViewerTable<T extends ApplicationLog>({
                     return (
                       <div
                         className={cn(
-                          "px-1 py-1 min-w-0 text-xs leading-[200%] font-[Geist_Mono]! **:font-[Geist_Mono]! text-mist-700 font-normal",
+                          "px-1 py-1 min-w-0 text-xs leading-[200%] font-[Geist_Mono]! **:font-[Geist_Mono]! text-primary font-normal",
                           isExpanded
                             ? "break-all whitespace-pre-wrap"
                             : "truncate",

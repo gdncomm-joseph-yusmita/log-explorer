@@ -10,7 +10,10 @@ export default function HighlightText({ text, query }: Props) {
     <>
       {parts.map((part, i) =>
         part.toLowerCase() === query.toLowerCase() ? (
-          <mark key={i} className="bg-yellow-200 text-black rounded-sm px-0.5">
+          <mark
+            key={i}
+            className="bg-yellow-200 text-primary [html.dark_&]:text-foreground rounded-sm px-0.5"
+          >
             {part}
           </mark>
         ) : (
